@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var util = require('./util');
 // passport와 passport-local package는 app.js에 require되지 않고 config의 passport.js에서 require
 var passport = require('./config/passport'); //1
 var flash = require('connect-flash'); 
@@ -45,7 +46,7 @@ app.use(function(req,res,next){
 
 // Routes
 app.use('/', require('./routes/home'));
-app.use('/posts', require('./routes/posts'));
+app.use('/posts', util.getPostQueryString, require('./routes/posts')); //util.getPostQueryString미들웨어를 posts route이 request되기 전에 배치
 app.use('/users', require('./routes/users'));
 
 // Port setting

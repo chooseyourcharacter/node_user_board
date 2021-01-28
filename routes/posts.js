@@ -10,10 +10,8 @@ router.get('/', async function (req, res){
   var page = Math.max(1, parseInt(req.query.page));
   var limit = Math.max(1, parseInt(req.query.limit));
   page = !isNaN(page) ? page : 1;
-  limit = !isNaN(page) ? page : 10;
-
+  limit = !isNaN(limit) ? limit : 10;
   
-
   var skip = (page - 1) * limit;
   var count = await Post.countDocuments({});
   var maxPage = Math.ceil(count / limit);
@@ -22,7 +20,7 @@ router.get('/', async function (req, res){
   .sort('-createdAt')
   .skip(skip)   // 8
   .limit(limit) // 8
-  .exec();
+    .exec();
 
   res.render('posts/index', {
     posts:posts,
